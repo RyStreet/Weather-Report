@@ -5,20 +5,99 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <script src="https://kit.fontawesome.com/c0ba172c73.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./assets/style.css"/>
 
     <title>Weather Report</title>
 
 </head>
-<body class=""> <!--append class/bg color based on weather & time-->
-    <header class = "container-fluid border-bottom border-primary " >
-    <h1 class = "text-center text-monospace mt-5">Weather Report</h1>
-    <p id="currentDay" class="row justify-content-center lead"></p>
-    <div class="form-outline row justify-content-center ">
-        <input type="search" id="searchForm" class="col-md-3 form-control mt-2 mb-3" placeholder="Search a City" aria-label="Search" />
-    </div>
+
+<body class="daySunny"> <!--append class/bg color based on weather & time-->
+
+    <header class = "container-fluid border-bottom border-dark " >
+
+        <h1 class = "text-center text-monospace mt-5">Weather Report</h1>
+
+        <p id="currentDay" class="row justify-content-center lead"></p>
+
+        <div class="form-outline row justify-content-center ">
+            <input type="search" id="searchForm" class="col-md-3 form-control mt-2 mb-3" placeholder="Search a City" aria-label="Search" />
+        </div>
+
     </header>
-    
+
+    <div class = "currentWeather row container-fluid border-bottom border-dark">
+
+        <h2 id="cityName" class = " text-monospace col-md-4  text-center align-self-center " >Searched City</h2>
+        <i id="weatherIconCurrent" class = "fa-solid fa-sun fa-9x mt-4 mb-4 col-md-4  text-center"></i>
+        <ul id="weatherListCurrent" class= 'text-monospace col-md-4 align-self-center'>
+            <li id="currentTemp" class="mb-2">Temp:</li>
+            <li id="currentWind" class="mb-2">Wind:</li>
+            <li id="currentHumidity">Humidity:</li>
+        </ul>
+    </div>
+
+    <div class = "container-fluid">
+        <h2 class = "text-monospace text-center mt-3"> Five Day Forecast</h2>
+    </div>
+
+    <div class ="fiveDayCards row container-fluid mt-3 mb-5 justify-content-around">
+
+        <div id="day1" class="weatherCard col-md-2 border">
+
+            <h3>Date</h3>
+            <i id="weatherIconDay1" class = "fa-solid fa-sun mt-2 mb-2"></i>
+            <ul id="weatherListDay1" class= 'text-monospace col-md-4 align-self-center'>
+                <li id="temp1" class="mb-2">Temp:</li>
+                <li id="wind1" class="mb-2">Wind:</li>
+                <li id="humid1">Humidity:</li>
+            </ul>
+
+        </div>
+
+        <div class="weatherCard col-md-2 border">
+            <h3>Date</h3>
+            <i id="weatherIconDay1" class = "fa-solid fa-sun mt-2 mb-2"></i>
+            <ul id="weatherListDay1" class= 'text-monospace col-md-4 align-self-center'>
+                <li id="temp1" class="mb-2">Temp:</li>
+                <li id="wind1" class="mb-2">Wind:</li>
+                <li id="humid1">Humidity:</li>
+            </ul>
+        </div>
+        
+        <div class="weatherCard col-md-2 border">
+            <h3>Date</h3>
+            <i id="weatherIconDay1" class = "fa-solid fa-sun mt-2 mb-2"></i>
+            <ul id="weatherListDay1" class= 'text-monospace col-md-4 align-self-center'>
+                <li id="temp1" class="mb-2">Temp:</li>
+                <li id="wind1" class="mb-2">Wind:</li>
+                <li id="humid1">Humidity:</li>
+            </ul>
+        </div>
+
+        <div class="weatherCard col-md-2 border">
+            <h3>Date</h3>
+            <i id="weatherIconDay1" class = "fa-solid fa-sun mt-2 mb-2"></i>
+            <ul id="weatherListDay1" class= 'text-monospace col-md-4 align-self-center'>
+                <li id="temp1" class="mb-2">Temp:</li>
+                <li id="wind1" class="mb-2">Wind:</li>
+                <li id="humid1">Humidity:</li>
+            </ul>
+        </div>
+
+        <div class="weatherCard col-md-2 border">
+            <h3>Date</h3>
+            <i id="weatherIconDay1" class = "fa-solid fa-sun mt-2 mb-2"></i>
+            <ul id="weatherListDay1" class= 'text-monospace col-md-4 align-self-center'>
+                <li id="temp1" class="mb-2">Temp:</li>
+                <li id="wind1" class="mb-2">Wind:</li>
+                <li id="humid1">Humidity:</li>
+            </ul>
+        </div>
+            
+         
+    </div>
+   
 
 
     

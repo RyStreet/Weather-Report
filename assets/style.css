@@ -1,0 +1,12 @@
+
+.daySunny{
+    background-color: lightblue;
+}
+.dayCloudy{
+    background-color: lightgrey;
+}
+.night{
+    background-color: black;
+    color: white;
+}
+

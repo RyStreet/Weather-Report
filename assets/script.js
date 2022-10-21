@@ -8,35 +8,58 @@ currentDay.appendChild(now) //appends currentDay text to empty <p> tag//
 
 //add search functionality
 
-const input = document.querySelector('input');
-input.addEventListener('search', updateCity)
+var newInput = document.querySelector('input');
+newInput.addEventListener('search', updateCity)
 
-const cityName = document.getElementById('cityName');
+// let searchText = document.getElementById('searchForm').value
 
+var cityName = document.getElementById('cityName');
 
+//variables for current day data
+var currentTemp = document.getElementById("currentTemp")
+var currentWind = document.getElementById("currentWind")
+var currentHumidity = document.getElementById("currentHumidity")
 
+//updates cityName div with value inputted into search bar, calls API function
 function updateCity(e){
   cityName.textContent = e.target.value;
-
   getAPI();
-  console.log(cityName.textContent)
 }
+
 
 //Open Weather API call 
 //my API Key = 2b5269240b8365eece7f67a1d5fe64d7
 
-function getAPI(e){
 
-var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=2b5269240b8365eece7f67a1d5fe64d7'
-fetch(requestUrl)
-.then(function (response) {
-  return response.json();  
-})
-.then(function (data){
-    console.log(data)
-})
+function getAPI(e){
+//grabs trimmed value from search bar
+  var searchInput = newInput.value.trim();
+//places dynamic value into api call
+  var requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchInput}&units=imperial&appid=2b5269240b8365eece7f67a1d5fe64d7`
+  fetch(requestUrl)
+  .then(function (response) {
+    return response.json();  
+  })
+  .then(function (data){
+      console.log(data)
+
+      var tempNow = data.list[0].main.feels_like
+      console.log(tempNow)
+      currentTemp.textContent = "Temp: " + tempNow + " F"
+      
+
+      
+
+      var windNow = data.list[0].wind.speed
+      console.log(windNow)
+      currentWind.textContent = "Wind: " + windNow + " m/s"
+      
+
+      var humidNow = data.list[0].main.humidity
+      console.log(humidNow)
+      currentHumidity.textContent = "Humidity: " + humidNow + "%"
+      
+      
+  })
 };
 
-
-// console.log(getAPI);
-// console.log(response.json())

@@ -19,6 +19,7 @@ var cityName = document.getElementById('cityName');
 var currentTemp = document.getElementById("currentTemp")
 var currentWind = document.getElementById("currentWind")
 var currentHumidity = document.getElementById("currentHumidity")
+var weatherIconCurrent = document.getElementById("weatherIconCurrent")
 
 //updates cityName div with value inputted into search bar, calls API function
 function updateCity(e){
@@ -58,6 +59,14 @@ function getAPI(e){
       var humidNow = data.list[0].main.humidity
       console.log(humidNow)
       currentHumidity.textContent = "Humidity: " + humidNow + "%"
+
+
+      var rainNow = data.list[0].rain
+      console.log(data.list[0].rain3h)
+      if(rainNow <= .2){
+        weatherIconCurrent.removeClass = "fa-sun";
+      }
+      
       
       
   })

@@ -22,8 +22,11 @@ var currentTemp = document.getElementById("currentTemp")
 var currentWind = document.getElementById("currentWind")
 var currentHumidity = document.getElementById("currentHumidity")
 var weatherIconCurrent = document.getElementById("weatherIconCurrent")
+
 var body = document.getElementById('fullPage')
+var responseText = document.getElementById('responseText')
 //updates cityName div with value inputted into search bar, calls API function
+
 function updateCity(e){
   
   getAPI();
@@ -41,15 +44,24 @@ function getAPI(e){
   var requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchInput}&units=imperial&appid=2b5269240b8365eece7f67a1d5fe64d7`
   fetch(requestUrl)
   .then(function (response) {
-    return response.json();  
+    if(response.status !== 200){
+      responseText.textContent = "You must enter a valid city name"
+    }
+    if(response.status === 200){
+    responseText.textContent = "" 
+    return response.json();
+    }
   })
   .then(function (data){
       console.log(data)
 
       //displays city name from data in cityName div
-      console.log(data.city.name)
+      
       var cityNameStyled = data.city.name
+      console.log(cityNameStyled)
       cityName.textContent = cityNameStyled
+      localStorage.setItem('Searched City', cityNameStyled)
+      
 
       //displays current temp data
       var tempNow = data.list[0].main.feels_like
@@ -66,23 +78,40 @@ function getAPI(e){
       console.log(humidNow + " %")
       currentHumidity.textContent = "Humidity: " + humidNow + "%"
 
-      var timeNow = data.city.sunset
-      console.log(timeNow + " sunset time")
+     
       //dynamically updates weather icon to display rain if rain data is > 40%
-      var rainNow = data.list[0].rain['3h'];
-      console.log(rainNow + " % chance of rain")
-      if(rainNow > .40){
+      // var rainNow = data.list[0].rain['3h'];
+      // console.log(rainNow + " % chance of rain")
+      // if(rainNow > .40){
+
+        var weatherStatus = data.list[0].weather[0].main
+        console.log(weatherStatus)
+
+        if(weatherStatus === "Rain"){
         weatherIconCurrent.classList.remove('fa-sun')
-        weatherIconCurrent.classList.add("fa-cloud-rain");
+        weatherIconCurrent.classList.remove('fa-cloud')
+        weatherIconCurrent.classList.add("fa-cloud-rain")
         body.classList.remove("daySunny")
         body.classList.add("dayCloudy")
       }
-      else{
+      else if(weatherStatus === "Clear") {
+        weatherIconCurrent.classList.remove("fa-cloud-rain")
+        weatherIconCurrent.classList.remove("fa-cloud")
+        weatherIconCurrent.classList.add('fa-sun');
+
         body.classList.remove("dayCloudy")
         body.classList.add("daySunny")
-        weatherIconCurrent.classList.add('fa-sun');
-        
       }
+
+      else if(weatherStatus === "Clouds") {
+        weatherIconCurrent.classList.remove('fa-sun');
+        weatherIconCurrent.classList.remove('fa-cloud-rain');
+        weatherIconCurrent.classList.add("fa-cloud");
+
+        body.classList.remove("daySunny")
+        body.classList.add("dayCloudy")
+      }
+
 
   })
 };

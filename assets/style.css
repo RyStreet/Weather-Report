@@ -22,3 +22,8 @@ ul{
 .weatherCard{
     background-color: white;
 }
+
+#searchHistory{
+    background-color: white;
+    border: solid  black;
+}

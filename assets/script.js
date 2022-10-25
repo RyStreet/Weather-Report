@@ -74,16 +74,7 @@ function getAPI(e){
     
       localStorage.setItem('searchedCity', cityNameStyled)
 
-      // renderHistory();
-
-      // var searchedCity = []
-      // function renderHistory(){
-      //   for(var i = 0; i <searchedCity.length; i++)
-      //   var searchedCityArray = searchedCity[i];
-      //   var recentSearchList = document.createElement('li')    
-      //   recentSearchList.textContent = searchedCityArray 
-      //   recentSearch.appendChild(recentSearchList);
-      // }
+     
       
       
 
@@ -107,7 +98,7 @@ function getAPI(e){
     console.log(fiveDayData.length)
       //function prints out the five day forecast
       function printFiveDays(){
-        
+        fiveDayCards.innerHTML=''
         for (let i=2; i < fiveDayData.length ; i=i+8){
         
         //creates elements for data variables

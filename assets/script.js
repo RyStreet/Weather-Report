@@ -72,10 +72,13 @@ function getAPI(e){
       
       // console.log(cityNameStyled)
       cityName.textContent = data.city.name
+      var cityNameStyled = cityName.textContent
+      
+      var searchedCity = localStorage.getItem('searchedCity') || []
+      
+      searchedCity.push(cityNameStyled)
 
-      
-      
-      localStorage.setItem('searchedCity', JSON.stringify(searchInput))
+      localStorage.setItem('searchedCity', JSON.stringify(cityNameStyled))
 
      
       

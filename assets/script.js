@@ -107,7 +107,7 @@ function getAPI(e){
     console.log(fiveDayData.length)
       //function prints out the five day forecast
       function printFiveDays(){
-        fiveDayData.reset()
+        
         for (let i=2; i < fiveDayData.length ; i=i+8){
         
         //creates elements for data variables

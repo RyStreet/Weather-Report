@@ -13,6 +13,7 @@ currentDay.appendChild(now) //appends currentDay text to empty <p> tag//
 var newInput = document.querySelector('input');
 newInput.addEventListener('search', updateCity)
 
+
 // let searchText = document.getElementById('searchForm').value
 
 var cityName = document.getElementById('cityName');
@@ -27,6 +28,8 @@ var body = document.getElementById('fullPage')
 var responseText = document.getElementById('responseText')
 //updates cityName div with value inputted into search bar, calls API function
 
+var fiveDayCards = document.getElementById("fiveDayCards")
+
 function updateCity(e){
   
   getAPI();
@@ -40,6 +43,7 @@ function updateCity(e){
 function getAPI(e){
 //grabs trimmed value from search bar
   var searchInput = newInput.value.trim();
+  console.log(searchInput)
 //places dynamic value into api call
   var requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchInput}&units=imperial&appid=2b5269240b8365eece7f67a1d5fe64d7`
   fetch(requestUrl)
@@ -78,16 +82,71 @@ function getAPI(e){
       console.log(humidNow + " %")
       currentHumidity.textContent = "Humidity: " + humidNow + "%"
 
+
+    var fiveDayData = data.list
+    console.log(fiveDayData.length)
+
+      function printFiveDays(){
+        console.log('hit')
+        for (let i=2; i < fiveDayData.length ; i=i+8){
+
+         var fiveDayCardsDiv = document.createElement("div");
+         var fiveDayCardsDate = document.createElement('h2');
+         var fiveDayCardsIcon =  document.createElement('i');
+         var fiveDayCardsTemp = document.createElement('li');
+         var fiveDayCardsWind = document.createElement('li');
+         var fiveDayCardsHumid = document.createElement('li');
+
+         fiveDayCards.appendChild(fiveDayCardsDiv);
+
+         fiveDayCardsDiv.appendChild(fiveDayCardsDate);
+         fiveDayCardsDiv.appendChild(fiveDayCardsIcon);
+         fiveDayCardsDiv.appendChild(fiveDayCardsTemp);
+         fiveDayCardsDiv.appendChild(fiveDayCardsWind);
+         fiveDayCardsDiv.appendChild(fiveDayCardsHumid);
+
+         var fiveDates = fiveDayData[i].dt_txt
+         var fiveTemps = fiveDayData[i].main.feels_like 
+         var fiveWinds = fiveDayData[i].wind.speed
+         var fiveHumid = fiveDayData[i].main.humidity
+
+         fiveDayCardsDate.textContent = fiveDates
+         fiveDayCardsTemp.textContent = "Temp: " + fiveTemps + " F"
+         fiveDayCardsWind.textContent = "Wind: " + fiveWinds + " m/s"
+         fiveDayCardsHumid.textContent = "Humidity: " + fiveHumid + " %"
+       
+         var fiveDayWeatherStatus = data.list[i].weather[0].main
+         fiveDayCardsIcon.classList.add('fa-solid')
+
+         console.log(fiveDayWeatherStatus)
+
+         if(fiveDayWeatherStatus === "Rain" || weatherStatus === "Thunderstorm"){
+          fiveDayCardsIcon.classList.remove('fa-sun')
+          fiveDayCardsIcon.classList.remove('fa-cloud')
+          fiveDayCardsIcon.classList.add("fa-cloud-rain")
+          
+        }
+        else if(fiveDayWeatherStatus === "Clear") {
+          fiveDayCardsIcon.classList.remove("fa-cloud-rain")
+          fiveDayCardsIcon.classList.remove("fa-cloud")
+          fiveDayCardsIcon.classList.add('fa-sun');
+        }
+  
+        else if(fiveDayWeatherStatus === "Clouds") {
+          fiveDayCardsIcon.classList.remove('fa-sun');
+          fiveDayCardsIcon.classList.remove('fa-cloud-rain');
+          fiveDayCardsIcon.classList.add("fa-cloud");
+        }
+        }
+      }
      
       //dynamically updates weather icon to display rain if rain data is > 40%
-      // var rainNow = data.list[0].rain['3h'];
-      // console.log(rainNow + " % chance of rain")
-      // if(rainNow > .40){
+     
 
         var weatherStatus = data.list[0].weather[0].main
         console.log(weatherStatus)
 
-        if(weatherStatus === "Rain"){
+        if(weatherStatus === "Rain" || weatherStatus === "Thunderstorm"){
         weatherIconCurrent.classList.remove('fa-sun')
         weatherIconCurrent.classList.remove('fa-cloud')
         weatherIconCurrent.classList.add("fa-cloud-rain")
@@ -111,7 +170,9 @@ function getAPI(e){
         body.classList.remove("daySunny")
         body.classList.add("dayCloudy")
       }
+      printFiveDays()
 
+   
 
   })
 };

@@ -35,7 +35,7 @@ var fiveDayCards = document.getElementById("fiveDayCards")
 
 
 
-// recentSearchList.textContent = localStorage.getItem('searchedCity')
+
 
 function updateCity(e){
   
@@ -45,6 +45,7 @@ function updateCity(e){
 
 //Open Weather API call 
 //my API Key = 2b5269240b8365eece7f67a1d5fe64d7
+
 
 
 function getAPI(e){
@@ -68,11 +69,13 @@ function getAPI(e){
 
       //displays city name from data in cityName div
       
-      var cityNameStyled = data.city.name
-      console.log(cityNameStyled)
-      cityName.textContent = cityNameStyled
-    
-      localStorage.setItem('searchedCity', cityNameStyled)
+      
+      // console.log(cityNameStyled)
+      cityName.textContent = data.city.name
+
+      
+      
+      localStorage.setItem('searchedCity', JSON.stringify(searchInput))
 
      
       

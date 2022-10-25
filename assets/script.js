@@ -30,9 +30,16 @@ var responseText = document.getElementById('responseText')
 
 var fiveDayCards = document.getElementById("fiveDayCards")
 
+// var recentSearch = document.getElementById("recentSearch")
+
+
+
+
+// recentSearchList.textContent = localStorage.getItem('searchedCity')
+
 function updateCity(e){
   
-  getAPI();
+   getAPI();
 }
 
 
@@ -64,7 +71,20 @@ function getAPI(e){
       var cityNameStyled = data.city.name
       console.log(cityNameStyled)
       cityName.textContent = cityNameStyled
-      localStorage.setItem('Searched City', cityNameStyled)
+    
+      localStorage.setItem('searchedCity', cityNameStyled)
+
+      // renderHistory();
+
+      // var searchedCity = []
+      // function renderHistory(){
+      //   for(var i = 0; i <searchedCity.length; i++)
+      //   var searchedCityArray = searchedCity[i];
+      //   var recentSearchList = document.createElement('li')    
+      //   recentSearchList.textContent = searchedCityArray 
+      //   recentSearch.appendChild(recentSearchList);
+      // }
+      
       
 
       //displays current temp data
@@ -85,11 +105,12 @@ function getAPI(e){
 
     var fiveDayData = data.list
     console.log(fiveDayData.length)
-
+      //function prints out the five day forecast
       function printFiveDays(){
-        console.log('hit')
+        fiveDayData.reset()
         for (let i=2; i < fiveDayData.length ; i=i+8){
-
+        
+        //creates elements for data variables
          var fiveDayCardsDiv = document.createElement("div");
          var fiveDayCardsDate = document.createElement('h2');
          var fiveDayCardsIcon =  document.createElement('i');
@@ -97,29 +118,35 @@ function getAPI(e){
          var fiveDayCardsWind = document.createElement('li');
          var fiveDayCardsHumid = document.createElement('li');
 
+        //appends dynamic div to fiveDayCards section in html 
          fiveDayCards.appendChild(fiveDayCardsDiv);
 
+         //appends various elements to the separate cards
          fiveDayCardsDiv.appendChild(fiveDayCardsDate);
          fiveDayCardsDiv.appendChild(fiveDayCardsIcon);
          fiveDayCardsDiv.appendChild(fiveDayCardsTemp);
          fiveDayCardsDiv.appendChild(fiveDayCardsWind);
          fiveDayCardsDiv.appendChild(fiveDayCardsHumid);
 
+        //variables to collect data for date, temp, wind and humidity 
          var fiveDates = fiveDayData[i].dt_txt
          var fiveTemps = fiveDayData[i].main.feels_like 
          var fiveWinds = fiveDayData[i].wind.speed
          var fiveHumid = fiveDayData[i].main.humidity
 
+        //appends data to text content 
          fiveDayCardsDate.textContent = fiveDates
          fiveDayCardsTemp.textContent = "Temp: " + fiveTemps + " F"
          fiveDayCardsWind.textContent = "Wind: " + fiveWinds + " m/s"
          fiveDayCardsHumid.textContent = "Humidity: " + fiveHumid + " %"
-       
+        
+         //grabs data for weather condition
          var fiveDayWeatherStatus = data.list[i].weather[0].main
+         
+         //adds font awesome class fa-solid for icon display
          fiveDayCardsIcon.classList.add('fa-solid')
 
-         console.log(fiveDayWeatherStatus)
-
+         //adds proper icon based off weather condition
          if(fiveDayWeatherStatus === "Rain" || weatherStatus === "Thunderstorm"){
           fiveDayCardsIcon.classList.remove('fa-sun')
           fiveDayCardsIcon.classList.remove('fa-cloud')
@@ -140,9 +167,8 @@ function getAPI(e){
         }
       }
      
-      //dynamically updates weather icon to display rain if rain data is > 40%
+      //dynamically updates weather icon depending on weather condition
      
-
         var weatherStatus = data.list[0].weather[0].main
         console.log(weatherStatus)
 
@@ -171,8 +197,6 @@ function getAPI(e){
         body.classList.add("dayCloudy")
       }
       printFiveDays()
-
-   
 
   })
 };

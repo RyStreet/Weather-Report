@@ -30,7 +30,7 @@ var responseText = document.getElementById('responseText')
 
 var fiveDayCards = document.getElementById("fiveDayCards")
 
-// var recentSearch = document.getElementById("recentSearch")
+var recentSearch = document.getElementById("recentSearch")
 
 
 
@@ -39,19 +39,31 @@ var fiveDayCards = document.getElementById("fiveDayCards")
 
 function updateCity(e){
   
-   getAPI();
+   getAPI(e);
 }
 
 
 //Open Weather API call 
 //my API Key = 2b5269240b8365eece7f67a1d5fe64d7
 
-
+function rerunSearch(e){
+  var historyButton = document.querySelector("button")
+  console.log(historyButton.innerText)
+  // const newInput = historyButton.innerText
+  getAPI(e);
+ }
 
 function getAPI(e){
+  console.log("event",e.target.classList)
+  if(e.target.classList.contains("cityHistoryButton")){
+    console.log("EVENT TARGET HERE "+ e.target.innerText )
+    var searchInput = e.target.innerText
+  }
+  else{
 //grabs trimmed value from search bar
   var searchInput = newInput.value.trim();
   console.log(searchInput)
+  }
 //places dynamic value into api call
   var requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchInput}&units=imperial&appid=2b5269240b8365eece7f67a1d5fe64d7`
   fetch(requestUrl)
@@ -74,15 +86,25 @@ function getAPI(e){
       cityName.textContent = data.city.name
       var cityNameStyled = cityName.textContent
       
-      var searchedCity = localStorage.getItem('searchedCity') || []
+      var searchedCity = JSON.parse(localStorage.getItem('searchedCity')) || []
       
       searchedCity.push(cityNameStyled)
 
-      localStorage.setItem('searchedCity', JSON.stringify(cityNameStyled))
+      localStorage.setItem('searchedCity', JSON.stringify(searchedCity))
 
+     var searchedCityDisplay = document.createElement('button')
+     searchedCityDisplay.classList.add('cityHistoryButton')
+     recentSearch.appendChild(searchedCityDisplay)
+
+     for (let i=0; i < searchedCity.length ; i++){
+     console.log(searchedCity[i])
+     var cityDisplay = searchedCity[i]
+     searchedCityDisplay.textContent = cityDisplay
+     }
+
+     searchedCityDisplay.addEventListener('click', rerunSearch)
      
-      
-      
+     
 
       //displays current temp data
       var tempNow = data.list[0].main.feels_like
